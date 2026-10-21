@@ -2,6 +2,12 @@
 
 ![vega-librarian-sdk](assets/tile.svg)
 
+<!-- vega-install-order -->
+> **Build order: 2/2. This kit needs 1 other Vega kit installed first.** Install them in this order, then this one:
+> 1/2 `vega-custody-sdk`  
+> 2/2 `vega-librarian-sdk` (this kit)
+> Install each with `pip install --no-deps git+https://github.com/jasonblasiak868-code/<name>` in the order shown. Full steps: [INTEGRATION_GUIDE](https://github.com/jasonblasiak868-code/vega-umbrella-sdk/blob/main/INTEGRATION_GUIDE.md).
+
 The Librarian is the family's memory of what went wrong and how it was fixed. It owns exactly one concern: **lessons and memory of past incidents** (layer 5 of the family). Every mistake can become a graded lesson — what happened, the root cause, the correction, the prevention and the proof the prevention works — validated on write and sealed into an append-only, hash-chained custody ledger with replicas. In bank-teller plain language: the institution keeps its own mistake book, every entry is chained to the one before, nobody can quietly rewrite it, and before a risky step the book is consulted, not the model's recollection.
 
 > **Licensing.** Source-available, not open source. Free for personal use; free for registered small businesses (under US$1M revenue and valuation); everyone else needs a commercial license (see LICENSE; for a commercial license write to jasonblasiak.ai.mail@gmail.com). Patent pending. Draft licence text, not yet reviewed by an attorney.
