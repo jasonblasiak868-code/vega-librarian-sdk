@@ -235,17 +235,25 @@ class Librarian:
             raise LibrarianRefused(f"status must be one of {CARD_STATUSES}")
         if not isinstance(card_id, str) or not card_id or not isinstance(content_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", content_hash):
             raise LibrarianRefused("card_id must be text and content_hash a sha256 hex string")
-        old = self.con.execute("select kind, content_hash, status from cards where card_id=?", (card_id,)).fetchone()
-        if old:
-            if old[1] != content_hash or old[0] != kind:
-                raise LibrarianRefused("a registered card's kind and hash never change: register a new card instead")
-            if old[2] == "revoked" and status != "revoked":
-                raise LibrarianRefused("a revoked card stays revoked")
-            if old[2] == "locked" and status == "candidate":
-                raise LibrarianRefused("a locked card cannot go back to candidate")
-        self.con.execute("insert or replace into cards values (?,?,?,?,?,?)",
-                         (card_id, kind, str(source), content_hash, status, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())))
-        self.con.commit()
+        # The read of the old card and the write of the new one are ONE transaction that takes the write lock first (BEGIN IMMEDIATE): two writers, in this process or another,
+        # can never both see 'no such card' and both register it with different hashes.
+        self.con.commit()                                  # nothing half-open before we take the lock
+        self.con.execute("begin immediate")
+        try:
+            old = self.con.execute("select kind, content_hash, status from cards where card_id=?", (card_id,)).fetchone()
+            if old:
+                if old[1] != content_hash or old[0] != kind:
+                    raise LibrarianRefused("a registered card's kind and hash never change: register a new card instead")
+                if old[2] == "revoked" and status != "revoked":
+                    raise LibrarianRefused("a revoked card stays revoked")
+                if old[2] == "locked" and status == "candidate":
+                    raise LibrarianRefused("a locked card cannot go back to candidate")
+            self.con.execute("insert or replace into cards values (?,?,?,?,?,?)",
+                             (card_id, kind, str(source), content_hash, status, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())))
+            self.con.commit()
+        except BaseException:
+            self.con.rollback()
+            raise
 
     def sync_conductor_registry(self, registry_rows):
         """Hold every Conductor workflow as a PRE card: candidate until a replay locks it."""

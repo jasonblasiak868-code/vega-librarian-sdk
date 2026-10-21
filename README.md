@@ -77,7 +77,7 @@ Both modules also have CLIs: `python -m vega_librarian.lesson_ledger add|list|re
 
 ## Tests
 
-53 tests in 3 files, all passing (STATUS.md; confirmed by REVIEW.md):
+54 tests in 4 files, all passing (STATUS.md; confirmed by REVIEW.md):
 
 - `tests/test_librarian.py` — functional: ledger, memory, decision trace
 - `tests/redteam_1_ledger.py` — red team: secrets in lessons, forged edits, cut-off tails, torn writes, concurrent writers, hostile inputs

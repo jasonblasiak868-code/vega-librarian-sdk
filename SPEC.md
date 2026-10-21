@@ -155,7 +155,7 @@ The only runtime dependency is **vega-custody-sdk** (layer 0): its `Chain` provi
 
 ## 7. Conformance
 
-A third party can verify this specification by running the published tests: put this repo's `src/` and vega-custody-sdk's `src/` on `PYTHONPATH`, then run each file in `tests/` (`test_librarian.py`, `redteam_1_ledger.py`, `redteam_2_memory_and_trace.py`). STATUS.md records 53 tests in 3 files, all passing.
+A third party can verify this specification by running the published tests: put this repo's `src/` and vega-custody-sdk's `src/` on `PYTHONPATH`, then run each file in `tests/` (`test_librarian.py`, `redteam_1_ledger.py`, `redteam_2_memory_and_trace.py`). STATUS.md records 54 tests in 4 files, all passing.
 
 **Passing means:** the reference implementation behaves as specified above on the published functional and red-team cases, on this machine, at this commit.
 

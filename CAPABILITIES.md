@@ -2,7 +2,7 @@
 
 A minute inventory of what this kit actually enforces, where the enforcement lives in the published code, which test demonstrates it, and — for every capability — the honest limit. The middle column answers one question: why can't a policy or a prompt provide this? The structural reason is the same across the family, and it comes from the whitepaper: a rule that lives inside the model's context is a promise, and the thing being checked is the thing doing the checking. A rule that lives in an append-only record *outside* the model is a mechanism: it can be verified without trusting the model, the vendor, or the project, and it fails closed.
 
-Status note: all three modules are BUILT and tested (STATUS.md). Test counts: 53 tests in 3 files, all passing (STATUS.md / REVIEW.md).
+Status note: all three modules are BUILT and tested (STATUS.md). Test counts: 54 tests in 4 files, all passing (STATUS.md / REVIEW.md).
 
 ---
 
